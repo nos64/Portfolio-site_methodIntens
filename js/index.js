@@ -12,10 +12,9 @@ const handlerModal = (
   let opacity = 0;
 
   const speed = {
-    slow: 15,
-    medium: 8,
-    fast: 1,
-    default: 5,
+    slow: 0.02,
+    medium: 0.05,
+    fast: 0.1,
   };
 
   openBtn.addEventListener("click", () => {
@@ -23,30 +22,25 @@ const handlerModal = (
 
     modal.classList.add(openSelector);
 
-    const timer = setInterval(
-      () => {
-        opacity += 0.02;
-        modal.style.opacity = opacity;
-        if (opacity >= 1) {
-          clearInterval(timer);
-        }
-      },
-      speed[speedKey] ? speed[speedKey] : speed.default
-    );
+    const anim = () => {
+      opacity += speed[speedKey];
+      modal.style.opacity = opacity;
+      if (opacity < 1) requestAnimationFrame(anim);
+    };
+    requestAnimationFrame(anim);
   });
 
   closeTrigger.addEventListener("click", () => {
-    const timer = setInterval(
-      () => {
-        opacity -= 0.02;
-        modal.style.opacity = opacity;
-        if (opacity <= 0) {
-          clearInterval(timer);
-          modal.classList.remove(openSelector);
-        }
-      },
-      speed[speedKey] ? speed[speedKey] : speed.default
-    );
+    const anim = () => {
+      opacity -= speed[speedKey];
+      modal.style.opacity = opacity;
+      if (opacity > 0) {
+        requestAnimationFrame(anim);
+      } else {
+        modal.classList.remove(openSelector);
+      }
+    };
+    requestAnimationFrame(anim);
   });
 };
 
