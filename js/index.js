@@ -3,6 +3,10 @@
   const disableScroll = () => {
     const widthScroll = window.innerWidth - document.body.offsetWidth;
     document.body.scrollPosition = window.scrollY;
+    document.documentElement.style.cssText = `
+    position: relstive;
+    height: 100vh;
+    `;
 
     document.body.style.cssText = `
   overflow: hidden;
@@ -16,6 +20,7 @@
   };
 
   const enableScroll = () => {
+    document.documentElement.style.cssText = ``;
     document.body.style.cssText = `position: relative`;
     window.scroll({ top: document.body.scrollPosition });
   };
