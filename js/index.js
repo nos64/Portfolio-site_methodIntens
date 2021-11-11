@@ -59,7 +59,6 @@ const enableScroll = () => {
     };
 
     const closeModal = () => {
-      enableScroll();
       const anim = () => {
         opacity -= speed[speedKey];
         modal.style.opacity = opacity;
@@ -67,6 +66,8 @@ const enableScroll = () => {
           requestAnimationFrame(anim);
         } else {
           modal.classList.remove(openSelector);
+          opacity = 0;
+          enableScroll();
         }
       };
       requestAnimationFrame(anim);
